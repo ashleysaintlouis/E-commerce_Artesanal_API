@@ -30,6 +30,9 @@ async function getUser(req, res) {
 async function getAllUsers(req, res) {
     try {
         const users = await getAllUsersService();
+        if (!users || users.length === 0) {
+            return res.status(404).json({ message: 'Não possui usuário cadastrado (nenhum usuário encontrado).' });
+        }
         res.json(users);
     } catch (err) {
         res.status(500).json({ error: 'Erro no servidor no getAllUsers', err });
