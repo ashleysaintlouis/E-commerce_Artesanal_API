@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { createUser, findUserByEmail, findUserById, getAllUsers: getAllUsersService } = require('../services/userService');
+const { createUser, findUserByEmail, findUserById, getAllUsersService } = require('../services/userService');
 require('dotenv').config();
 
 async function register(req, res) {
