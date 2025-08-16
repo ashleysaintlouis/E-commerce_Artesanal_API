@@ -3,6 +3,10 @@
 var express = require('express');
 var cors = require('cors');
 require('dotenv').config();
+var _require = require('./database'),
+  initDatabase = _require.initDatabase;
+initDatabase(); // Call the function returned by require
+
 var authRoutes = require('./routes/authRoutes');
 var statusRoutes = require('./routes/statusRoutes'); // Importa a nova rota
 

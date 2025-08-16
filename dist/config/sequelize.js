@@ -1,12 +1,9 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.sequelize = void 0;
-var _sequelize = require("sequelize");
+var _require = require('sequelize'),
+  Sequelize = _require.Sequelize;
 var isProd = process.env.NODE_ENV === 'production';
-var sequelize = exports.sequelize = new _sequelize.Sequelize({
+var sequelize = new Sequelize({
   database: process.env.DB_NAME,
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
@@ -21,3 +18,6 @@ var sequelize = exports.sequelize = new _sequelize.Sequelize({
   } : {},
   logging: false
 });
+module.exports = {
+  sequelize: sequelize
+};

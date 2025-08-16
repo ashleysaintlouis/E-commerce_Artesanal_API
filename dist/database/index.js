@@ -4,71 +4,41 @@ function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present,
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-var bcrypt = require('bcrypt');
-var pool = require('../config/dbpostgres/db');
-function createUser(_x, _x2, _x3) {
-  return _createUser.apply(this, arguments);
-}
-function _createUser() {
-  _createUser = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(name, email, password) {
-    var hashedPassword, result;
+var _require = require('../config/sequelize'),
+  sequelize = _require.sequelize;
+require('../models/');
+var initDatabase = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+    var _t;
     return _regenerator().w(function (_context) {
-      while (1) switch (_context.n) {
+      while (1) switch (_context.p = _context.n) {
         case 0:
+          _context.p = 0;
           _context.n = 1;
-          return bcrypt.hash(password, 10);
+          return sequelize.authenticate();
         case 1:
-          hashedPassword = _context.v;
+          console.log('🔌 Conexão com o banco estabelecida com sucesso.');
           _context.n = 2;
-          return pool.query('INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email', [name, email, hashedPassword]);
+          return sequelize.sync({
+            alter: true
+          });
         case 2:
-          result = _context.v;
-          return _context.a(2, result.rows[0]);
+          console.log('📦 Sincronização com o banco finalizada.');
+          _context.n = 4;
+          break;
+        case 3:
+          _context.p = 3;
+          _t = _context.v;
+          console.error('❌ Erro ao conectar ou acessar tabela:', _t);
+        case 4:
+          return _context.a(2);
       }
-    }, _callee);
+    }, _callee, null, [[0, 3]]);
   }));
-  return _createUser.apply(this, arguments);
-}
-function getAllUsersService() {
-  return _getAllUsersService.apply(this, arguments);
-}
-function _getAllUsersService() {
-  _getAllUsersService = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
-    var result;
-    return _regenerator().w(function (_context2) {
-      while (1) switch (_context2.n) {
-        case 0:
-          _context2.n = 1;
-          return pool.query('SELECT id, name, email FROM user');
-        case 1:
-          result = _context2.v;
-          return _context2.a(2, result.rows);
-      }
-    }, _callee2);
-  }));
-  return _getAllUsersService.apply(this, arguments);
-}
-function findUserByEmail(_x4) {
-  return _findUserByEmail.apply(this, arguments);
-}
-function _findUserByEmail() {
-  _findUserByEmail = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(email) {
-    var result;
-    return _regenerator().w(function (_context3) {
-      while (1) switch (_context3.n) {
-        case 0:
-          _context3.n = 1;
-          return pool.query('SELECT * FROM users WHERE email = $1', [email]);
-        case 1:
-          result = _context3.v;
-          return _context3.a(2, result.rows[0]);
-      }
-    }, _callee3);
-  }));
-  return _findUserByEmail.apply(this, arguments);
-}
+  return function initDatabase() {
+    return _ref.apply(this, arguments);
+  };
+}();
 module.exports = {
-  createUser: createUser,
-  findUserByEmail: findUserByEmail,
-  getAllUsersService: getAllUsersService
+  initDatabase: initDatabase
 };

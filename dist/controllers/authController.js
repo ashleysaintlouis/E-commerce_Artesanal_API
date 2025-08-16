@@ -8,7 +8,9 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 var _require = require('../services/userService'),
   createUser = _require.createUser,
-  findUserByEmail = _require.findUserByEmail;
+  findUserByEmail = _require.findUserByEmail,
+  findUserById = _require.findUserById,
+  getAllUsersService = _require.getAllUsersService;
 require('dotenv').config();
 function register(_x, _x2) {
   return _register.apply(this, arguments);
@@ -44,7 +46,7 @@ function _register() {
           _context.p = 5;
           _t = _context.v;
           res.status(500).json({
-            error: 'Erro no servidor'
+            error: 'Erro no servidor no register'
           });
         case 6:
           return _context.a(2);
@@ -53,38 +55,115 @@ function _register() {
   }));
   return _register.apply(this, arguments);
 }
-function login(_x3, _x4) {
-  return _login.apply(this, arguments);
+function getUser(_x3, _x4) {
+  return _getUser.apply(this, arguments);
 }
-function _login() {
-  _login = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(req, res) {
-    var _req$body2, email, password, user, validPassword, token, _t2;
+function _getUser() {
+  _getUser = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(req, res) {
+    var user, _t2;
     return _regenerator().w(function (_context2) {
       while (1) switch (_context2.p = _context2.n) {
         case 0:
-          _req$body2 = req.body, email = _req$body2.email, password = _req$body2.password;
-          _context2.p = 1;
-          _context2.n = 2;
-          return findUserByEmail(email);
-        case 2:
+          _context2.p = 0;
+          _context2.n = 1;
+          return findUserById(req.user.id);
+        case 1:
           user = _context2.v;
           if (user) {
-            _context2.n = 3;
+            _context2.n = 2;
             break;
           }
           return _context2.a(2, res.status(404).json({
             error: 'Usuário não encontrado'
           }));
-        case 3:
+        case 2:
+          res.json(user);
           _context2.n = 4;
-          return bcrypt.compare(password, user.password);
+          break;
+        case 3:
+          _context2.p = 3;
+          _t2 = _context2.v;
+          res.status(500).json({
+            error: 'Erro no servidor no getUser'
+          });
         case 4:
-          validPassword = _context2.v;
-          if (validPassword) {
-            _context2.n = 5;
+          return _context2.a(2);
+      }
+    }, _callee2, null, [[0, 3]]);
+  }));
+  return _getUser.apply(this, arguments);
+}
+function getAllUsers(_x5, _x6) {
+  return _getAllUsers.apply(this, arguments);
+}
+function _getAllUsers() {
+  _getAllUsers = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(req, res) {
+    var users, _t3;
+    return _regenerator().w(function (_context3) {
+      while (1) switch (_context3.p = _context3.n) {
+        case 0:
+          _context3.p = 0;
+          _context3.n = 1;
+          return getAllUsersService();
+        case 1:
+          users = _context3.v;
+          if (!(!users || users.length === 0)) {
+            _context3.n = 2;
             break;
           }
-          return _context2.a(2, res.status(401).json({
+          return _context3.a(2, res.status(404).json({
+            message: 'Não possui usuário cadastrado (nenhum usuário encontrado).'
+          }));
+        case 2:
+          res.json(users);
+          _context3.n = 4;
+          break;
+        case 3:
+          _context3.p = 3;
+          _t3 = _context3.v;
+          res.status(500).json({
+            error: 'Erro no servidor no getAllUsers',
+            err: _t3
+          });
+        case 4:
+          return _context3.a(2);
+      }
+    }, _callee3, null, [[0, 3]]);
+  }));
+  return _getAllUsers.apply(this, arguments);
+}
+function login(_x7, _x8) {
+  return _login.apply(this, arguments);
+}
+function _login() {
+  _login = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(req, res) {
+    var _req$body2, email, password, user, validPassword, token, _t4;
+    return _regenerator().w(function (_context4) {
+      while (1) switch (_context4.p = _context4.n) {
+        case 0:
+          _req$body2 = req.body, email = _req$body2.email, password = _req$body2.password;
+          _context4.p = 1;
+          _context4.n = 2;
+          return findUserByEmail(email);
+        case 2:
+          user = _context4.v;
+          if (user) {
+            _context4.n = 3;
+            break;
+          }
+          return _context4.a(2, res.status(404).json({
+            error: 'Usuário não encontrado'
+          }));
+        case 3:
+          _context4.n = 4;
+          return bcrypt.compare(password, user.password);
+        case 4:
+          validPassword = _context4.v;
+          if (validPassword) {
+            _context4.n = 5;
+            break;
+          }
+          return _context4.a(2, res.status(401).json({
             error: 'Senha inválida'
           }));
         case 5:
@@ -97,22 +176,24 @@ function _login() {
           res.json({
             token: token
           });
-          _context2.n = 7;
+          _context4.n = 7;
           break;
         case 6:
-          _context2.p = 6;
-          _t2 = _context2.v;
+          _context4.p = 6;
+          _t4 = _context4.v;
           res.status(500).json({
-            error: 'Erro no servidor'
+            error: 'Erro no servidor no login'
           });
         case 7:
-          return _context2.a(2);
+          return _context4.a(2);
       }
-    }, _callee2, null, [[1, 6]]);
+    }, _callee4, null, [[1, 6]]);
   }));
   return _login.apply(this, arguments);
 }
 module.exports = {
   register: register,
-  login: login
+  login: login,
+  getUser: getUser,
+  getAllUsers: getAllUsers
 };
