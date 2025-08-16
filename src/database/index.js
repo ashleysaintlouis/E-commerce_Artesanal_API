@@ -1,6 +1,8 @@
-import { sequelize } from '../config/sequelize'
-import '../models'
-export const initDatabase = async () => {
+const { sequelize } = require('../config/sequelize');
+require('../models/');
+
+const initDatabase = async () => {
+
   try {
     await sequelize.authenticate()
     console.log('🔌 Conexão com o banco estabelecida com sucesso.')
@@ -13,4 +15,4 @@ export const initDatabase = async () => {
   }
 }
  
-export { sequelize }
+module.exports = { initDatabase };

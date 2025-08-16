@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-import { initDatabase } from './database';
-initDatabase();
+const { initDatabase } = require('./database');
+initDatabase(); // Call the function returned by require
 
 const authRoutes = require('./routes/authRoutes');
 const statusRoutes = require('./routes/statusRoutes'); // Importa a nova rota

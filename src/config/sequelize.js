@@ -1,8 +1,8 @@
-import { Sequelize } from 'sequelize'
+const { Sequelize } = require('sequelize');
 
 const isProd = process.env.NODE_ENV === 'production';
 
-export const sequelize = new Sequelize({
+const sequelize = new Sequelize({
   database: process.env.DB_NAME,
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
@@ -19,3 +19,4 @@ export const sequelize = new Sequelize({
     : {},
   logging: false,
 });
+module.exports = { sequelize };
