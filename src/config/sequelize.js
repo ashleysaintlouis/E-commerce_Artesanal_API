@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 
 const isRailwayInternal = !!process.env.PGHOST && process.env.PGHOST.endsWith('.railway.internal');
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+const sequelize = new Sequelize(process.env.DATABASE_PUBLIC_URL, {
   dialect: 'postgres',
   logging: false,
   dialectOptions: isRailwayInternal
