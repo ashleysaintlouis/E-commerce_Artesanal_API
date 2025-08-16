@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { createUser, findUserByEmail } = require('../services/userService');
+const { createUser, findUserByEmail, findUserById, getAllUsers: getAllUsersService } = require('../services/userService');
 require('dotenv').config();
 
 async function register(req, res) {
@@ -15,6 +15,27 @@ async function register(req, res) {
         res.status(500).json({ error: 'Erro no servidor' });
     }
 }
+
+async function getUser(req, res) {
+    try {
+        const user = await findUserById(req.user.id);
+        if (!user) return res.status(404).json({ error: 'Usuário não encontrado' });
+
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ error: 'Erro no servidor' });
+    }
+}
+
+async function getAllUsers(req, res) {
+    try {
+        const users = await getAllUsersService();
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ error: 'Erro no servidor' });
+    }
+}
+
 
 async function login(req, res) {
     const { email, password } = req.body;
@@ -35,4 +56,4 @@ async function login(req, res) {
     }
 }
 
-module.exports = { register, login };
+module.exports = { register, login, getUser, getAllUsers };
