@@ -13,7 +13,7 @@ async function createUser(name, email, password) {
 
 
 async function getAllUsersService() {
-    const result = await pool.query('SELECT id, name, email FROM users');
+    const result = await pool.query('SELECT id, name, email FROM user');
     return result.rows;
 }
 
