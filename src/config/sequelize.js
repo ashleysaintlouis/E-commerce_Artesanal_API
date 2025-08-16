@@ -1,18 +1,21 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from 'sequelize'
 
-const isRailwayInternal = !!process.env.PGHOST && process.env.PGHOST.endsWith('.railway.internal');
+const isProd = process.env.NODE_ENV === 'production';
 
-const sequelize = new Sequelize(process.env.DATABASE_PUBLIC_URL, {
+export const sequelize = new Sequelize({
+  database: process.env.DB_NAME,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
   dialect: 'postgres',
+  dialectOptions: isProd
+    ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      }
+    : {},
   logging: false,
-  dialectOptions: isRailwayInternal
-    ? {} // conexão interna do Railway não precisa SSL
-    : { ssl: { require: true, rejectUnauthorized: false } }, // fora do Railway
 });
-
-async function connect() {
-  await sequelize.authenticate();
-  console.log('🔗 Sequelize conectado ao Postgres.');
-}
-
-module.exports = { sequelize, connect };
