@@ -32,7 +32,7 @@ async function getAllUsers(req, res) {
         const users = await getAllUsersService();
         res.json(users);
     } catch (err) {
-        res.status(500).json({ error: 'Erro no servidor no getAllUsers' });
+        res.status(500).json({ error: 'Erro no servidor no getAllUsers', err });
     }
 }
 
