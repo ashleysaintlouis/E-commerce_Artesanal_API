@@ -12,7 +12,7 @@ async function register(req, res) {
         const user = await createUser(name, email, password);
         res.status(201).json(user);
     } catch (err) {
-        res.status(500).json({ error: 'Erro no servidor' });
+        res.status(500).json({ error: 'Erro no servidor no register' });
     }
 }
 
@@ -23,7 +23,7 @@ async function getUser(req, res) {
 
         res.json(user);
     } catch (err) {
-        res.status(500).json({ error: 'Erro no servidor' });
+        res.status(500).json({ error: 'Erro no servidor no getUser' });
     }
 }
 
@@ -32,7 +32,7 @@ async function getAllUsers(req, res) {
         const users = await getAllUsersService();
         res.json(users);
     } catch (err) {
-        res.status(500).json({ error: 'Erro no servidor' });
+        res.status(500).json({ error: 'Erro no servidor no getAllUsers' });
     }
 }
 
@@ -52,7 +52,7 @@ async function login(req, res) {
 
         res.json({ token });
     } catch (err) {
-        res.status(500).json({ error: 'Erro no servidor' });
+        res.status(500).json({ error: 'Erro no servidor no login' });
     }
 }
 
