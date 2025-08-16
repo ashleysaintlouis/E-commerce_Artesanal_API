@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon node src/server.js",
-    "build": "tsc",
+    "build": "babel src --out-dir dist",
     "start": "node src/server.js"
   },
   "keywords": [],
@@ -21,6 +21,9 @@
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
+    "@babel/cli": "^7.28.3",
+    "@babel/core": "^7.28.3",
+    "@babel/preset-env": "^7.28.3",
     "nodemon": "^3.1.10"
   }
 }
