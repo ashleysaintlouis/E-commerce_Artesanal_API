@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../config/sequelize'); // Assumindo seu arquivo de configuração do Sequelize
 
-const User = sequelize.define('User', {
+export const User = sequelize.define('User', {
   // O campo 'id' é criado automaticamente por padrão como chave primária e auto-incremento
 
   name: {
@@ -46,4 +46,3 @@ const User = sequelize.define('User', {
 // };
 
 
-module.exports = User;
