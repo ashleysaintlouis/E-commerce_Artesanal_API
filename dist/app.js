@@ -5,17 +5,12 @@ var cors = require('cors');
 require('dotenv').config();
 var _require = require('./database'),
   initDatabase = _require.initDatabase;
-initDatabase(); // Call the function returned by require
-
+initDatabase();
 var authRoutes = require('./routes/authRoutes');
-var statusRoutes = require('./routes/statusRoutes'); // Importa a nova rota
-
+var statusRoutes = require('./routes/statusRoutes');
 var app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/api', statusRoutes);
-app.get('/', function (req, res) {
-  res.send('API funcionando!');
-});
 module.exports = app;

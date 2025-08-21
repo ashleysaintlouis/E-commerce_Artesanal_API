@@ -4,41 +4,23 @@ function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present,
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-var _require = require('../config/sequelize'),
-  sequelize = _require.sequelize;
-require('../models/');
-var initDatabase = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-    var _t;
-    return _regenerator().w(function (_context) {
-      while (1) switch (_context.p = _context.n) {
-        case 0:
-          _context.p = 0;
-          _context.n = 1;
-          return sequelize.authenticate();
-        case 1:
-          console.log('🔌 Conexão com o banco estabelecida com sucesso.');
-          _context.n = 2;
-          return sequelize.sync({
-            alter: true
-          });
-        case 2:
-          console.log('📦 Sincronização com o banco finalizada.');
-          _context.n = 4;
-          break;
-        case 3:
-          _context.p = 3;
-          _t = _context.v;
-          console.error('❌ Erro ao conectar ou acessar tabela:', _t);
-        case 4:
-          return _context.a(2);
-      }
-    }, _callee, null, [[0, 3]]);
-  }));
-  return function initDatabase() {
-    return _ref.apply(this, arguments);
-  };
-}();
-module.exports = {
-  initDatabase: initDatabase
-};
+var db = require('./models');
+_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+  var users;
+  return _regenerator().w(function (_context) {
+    while (1) switch (_context.n) {
+      case 0:
+        _context.n = 1;
+        return db.sequelize.authenticate();
+      case 1:
+        console.log('Conexão bem-sucedida!');
+        _context.n = 2;
+        return db.User.findAll();
+      case 2:
+        users = _context.v;
+        console.log(users);
+      case 3:
+        return _context.a(2);
+    }
+  }, _callee);
+}))();
