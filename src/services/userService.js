@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const pool = require('../config/dbpostgres/db');
+const pool = require('../config/dbpostgres/sequelize');
 
 async function createUser(name, email, password) {
     const hashedPassword = await bcrypt.hash(password, 10);
