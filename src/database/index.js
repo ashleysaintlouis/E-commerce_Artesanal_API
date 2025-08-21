@@ -1,18 +1,10 @@
-const { sequelize } = require('../config/sequelize');
-require('../models/');
+const { sequelize } = require('../config/dbpostgres/sequelize');
+const db = require('./models');
 
-const initDatabase = async () => {
+(async () => {
+  await db.sequelize.authenticate();
+  console.log('Conexão bem-sucedida!');
 
-  try {
-    await sequelize.authenticate()
-    console.log('🔌 Conexão com o banco estabelecida com sucesso.')
- 
-    await sequelize.sync({ alter: true })
-    console.log('📦 Sincronização com o banco finalizada.')
- 
-  } catch (error) {
-    console.error('❌ Erro ao conectar ou acessar tabela:', error)
-  }
-}
- 
-module.exports = { initDatabase };
+  const users = await db.User.findAll();
+  console.log(users);
+})();
