@@ -1,4 +1,3 @@
-const { sequelize } = require('../config/dbpostgres/sequelize');
 const db = require('./models');
 
 (async () => {

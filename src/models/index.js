@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/sequelize'); // importa seu sequelize.js
+const sequelize = require('../config/dbpostgres/sequelize'); // importa seu sequelize.js
 
 const basename = path.basename(__filename);
 const db = {};
